@@ -1,16 +1,12 @@
-Workspace.FallenPartsDestroyHeight = -50000  -- You can change this to your desired height for parts
+Workspace.FallenPartsDestroyHeight = -9999999999999  -- You can change this to your desired height for parts
 
 game.Players.PlayerAdded:Connect(function(player)
     player.CharacterAdded:Connect(function(character)
         local humanoid = character:WaitForChild("Humanoid")
 
-        -- Listen for when the player is falling
-        humanoid.FreeFalling:Connect(function()
-            -- Check if the player's Y position is below the void threshold (e.g., -500)
-            if character.HumanoidRootPart.Position.Y < -500 then
-                -- Prevent the player from dying by maintaining their health
-                humanoid.Health = humanoid.Health  -- Keeps health from decreasing
-            end
+        -- Continuously ensure the player's health remains the same
+        game:GetService("RunService").Heartbeat:Connect(function()
+            humanoid.Health = humanoid.Health  -- Keeps health from decreasing
         end)
     end)
 end)
